@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  version: 0.1-oas3
+  title: MLProject
+  description: >-
+    A simple service to facilitate the use of my E222 ML algorithm using swagger-3.0
+    specification and codegen
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    name: Cloudmesh REST Service Example
+  license:
+    name: Apache
+paths:
+  /predict/<arg1>:
+    get:
+      tags:
+        - PREDICTION
+      operationId: files.Model.makePred
+      description: Returns a prediction about whether or not the patient with the given characteristics is likely to have had a stroke
+      parameters:
+        - in: path
+          name: arg1
+          required: true
+          schema:
+            type: array
+            items:
+              type: float
+            minItems: 1   
+      responses:
+        '200':
+          description: 'Prediction'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CPU'
+servers:
+  - url: 'http://localhost:8080/engr-222'
+components:
+  schemas:
+    CPU:
+      type: object
+      required:
+        - model
+      properties:
+        model:
+          type: string
