@@ -1,7 +1,11 @@
 from flask import Flask
 from flask import jsonify
 import connexion
+from joblib import load
 
+
+GNBF = load('files/GNB.pickle')
+DCNF = load('files/DCNTree.pickle')
 
 # Create the application instance
 app = connexion.App(__name__, specification_dir="./")

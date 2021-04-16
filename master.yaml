@@ -11,21 +11,12 @@ info:
   license:
     name: Apache
 paths:
-  /predict/<arg1>:
+  /pred/<arg>:
     get:
       tags:
         - PREDICTION
-      operationId: files.Model.makePred
+      operationId: files.Model.MakePredict
       description: Returns a prediction about whether or not the patient with the given characteristics is likely to have had a stroke
-      parameters:
-        - in: path
-          name: arg1
-          required: true
-          schema:
-            type: array
-            items:
-              type: float
-            minItems: 1   
       responses:
         '200':
           description: 'Prediction'
@@ -33,8 +24,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CPU'
+    post:
+      tags:
+        - Upload
+      summary: upload a CSV file for batch prediction processing
+      operationId: files.Model.filePred
+      responses:
+        '405':
+            description: Invalid input
+  /tree:
+      get:
+        tags:
+          - PREDICTION
+        operationId: files.Model.getTree
+        description: get tree 
+        responses:
+          '200':
+            description: 'tree'
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/CPU'
+
 servers:
-  - url: 'http://localhost:8080/engr-222'
+  - url: 'http://localhost:8080'
 components:
   schemas:
     CPU:
